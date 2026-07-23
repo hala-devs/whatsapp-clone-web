@@ -94,8 +94,9 @@ export default function Register() {
             Register
           </button>
           {console.log(formik.errors)}
-        </form>
+        </form><p className="text-gray-400 text-center mt-4">Already have an account? <span className="text-blue-400 cursor-pointer" onClick={() => navigate("/login")}>Login</span></p>
       </div>
     </div>
   );
 }
+

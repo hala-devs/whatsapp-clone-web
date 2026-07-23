@@ -68,8 +68,9 @@ export default function Login() {
             Login
           </button>
           {console.log(formik.errors)}
-        </form>
+        </form><p className="text-gray-400 text-center mt-4">Don't have an account? <span className="text-blue-400 cursor-pointer" onClick={() => navigate("/register")}>Create account</span></p>
       </div>
     </div>
   );
 }
+

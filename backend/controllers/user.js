@@ -22,7 +22,7 @@ const user = await User.create({
     defaultPicture,
 });
 user.password = undefined;
-const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
     expiresIn: '1d'
 });
 io.emit("user_created", user);
@@ -98,3 +98,14 @@ export const updateProfilePicture = async (req, res) => {
     io.emit("user_updated", user);
     res.send(user);
 };
+
+
+export const getUserProfile = async (req,res)=>{
+
+    const user = await User.findById(req.params.id)
+    .select("-password");
+
+    res.send(user);
+
+};
+
