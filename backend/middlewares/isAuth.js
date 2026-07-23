@@ -2,21 +2,25 @@
 
 import jwt from "jsonwebtoken";
 
-// HTTP Middleware
+// ✅ HTTP Middleware
 export default function isAuth(req, res, next) {
-  const token = req.headers.authorization.split(' ')[1];
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.send({ message: "Auth failed" });
+  }
+
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = data.userId;
-
     next();
-  } catch {
+  } catch (e) {
+    console.log(e);
     return res.send({ message: "Auth failed" });
-  }  
+  }
 }
 
-// WebSocket Middleware
-export const isSocketAuth = (socket, next) => {
+// ✅ WebSocket Middleware
+export function isSocketAuth(socket, next) {
   if (!socket.handshake.query || !socket.handshake.query.token) {
     return next(new Error("Authentication Invalid"));
   }
@@ -28,4 +32,4 @@ export const isSocketAuth = (socket, next) => {
   } catch (e) {
     next(e);
   }
-};
+}
